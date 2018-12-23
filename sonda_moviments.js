@@ -51,6 +51,7 @@ var startMoviment = (sonda) => {
             sonda.y += parseInt(coordMoviment[1])
         }
     })
+    console.log(sonda)
 }
 
 module.exports = {

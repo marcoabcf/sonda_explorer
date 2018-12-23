@@ -2,8 +2,8 @@ const UTIL = require('./util');
 
 const FORMATS = {
     'COUNT_SONDAS' : /^\d+$/,
-    'COORD_SUPERIOR_DIREITA' : /^([\d]\s{1}[\d])$/,
-    'COORD_SONDA' : /^([\d]\s{1}[\d]\s{1}[N|E|S|W]{1})$/i,
+    'COORD_SUPERIOR_DIREITA' : /^(\d+\s{1}\d+)$/,
+    'COORD_SONDA' : /^(\d+\s{1}\d+\s{1}[N|E|S|W]{1})$/i,
     "MOVIMENTOS" : /[L|R|M]/i
 }
 

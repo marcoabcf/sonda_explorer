@@ -33,7 +33,7 @@ const main = async () => {
             var coords_sonda = await question(MESSAGES.MESSAGE_COORDENADA_SONDA.replace('number_sonda', count_sonda+1), VALIDATE.FORMATS.COORD_SONDA)
             var sonda = UTIL.getSplitCoords(coords_sonda);
 
-            VALIDATE.coordInPlanalto(coords_planalto, coords_sonda);
+            VALIDATE.coordInPlanalto(coords_planalto, sonda);
 
             sonda.moviments_sonda = await question(MESSAGES.MESSAGE_MOVIMENTOS_SONDA.replace('number_sonda', count_sonda+1), VALIDATE.FORMATS.MOVIMENTOS)
             sondas[count_sonda] = SONDA_MOVIMENTS.startMoviment(sonda);
