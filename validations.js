@@ -1,4 +1,4 @@
-const UTIL = require('./util');
+const UTIL = require('./util')
 
 const FORMATS = {
     'COUNT_SONDAS' : /^\d+$/,
@@ -24,7 +24,7 @@ var formatValue = function(str, format) {
  * @param {object} coords_sonda 
  */
 var coordInPlanalto = (coords_planalto, coords_sonda) => {
-    coords_planalto = UTIL.getSplitCoords(coords_planalto);
+    coords_planalto = UTIL.getSplitCoords(coords_planalto)
 
     if (coords_sonda.x < 0 || coords_sonda.x > coords_planalto.x || coords_sonda.y < 0 || coords_sonda.y > coords_planalto.y) {
         throw '\nCoordenadas informadas para a sonda está fora do limite da malha do planalto ('+ coords_planalto.x +', '+ coords_planalto.y +').'

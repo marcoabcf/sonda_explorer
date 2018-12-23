@@ -12,5 +12,5 @@ module.exports.getSplitCoords = (coords) => {
         split_coords.direction = input_coords_split[2].toUpperCase()
     }
 
-    return split_coords;
+    return split_coords
 }

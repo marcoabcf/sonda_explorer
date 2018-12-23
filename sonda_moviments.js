@@ -1,4 +1,4 @@
-const VALIDATE = require('./validations');
+const VALIDATE = require('./validations')
 
 var mapMoviments = []
 var mapDirections = []
@@ -8,18 +8,18 @@ var starDirections = []
  * Loads the mappings of the directions and motions of the probe and wind rose axis.
  */
 var loadMaps = function() {
-    mapDirections['R'] = 90;
-    mapDirections['L'] = -90;
+    mapDirections['R'] = 90
+    mapDirections['L'] = -90
 
-    mapMoviments['EM'] = '1,0';
-    mapMoviments['NM'] = '0,1';
-    mapMoviments['SM'] = '0,-1';
-    mapMoviments['WM'] = '-1,0';
+    mapMoviments['EM'] = '1,0'
+    mapMoviments['NM'] = '0,1'
+    mapMoviments['SM'] = '0,-1'
+    mapMoviments['WM'] = '-1,0'
 
-    starDirections['N'] = 0;
-    starDirections['E'] = 90;
-    starDirections['S'] = 180;
-    starDirections['W'] = 270;
+    starDirections['N'] = 0
+    starDirections['E'] = 90
+    starDirections['S'] = 180
+    starDirections['W'] = 270
 }
 
 /**
@@ -54,7 +54,7 @@ var getValueDirection = function(sonda, moviment) {
  */
 var startMoviment = (coords_planalto, sonda) => {
     sonda.moviments_sonda.split('').map(function(moviment) {
-        moviment = moviment.toUpperCase();
+        moviment = moviment.toUpperCase()
         if((moviment == 'R' || moviment == 'L') && mapDirections[moviment]) {
             var starDirection = getValueDirection(sonda, moviment)
             sonda.direction = Object.keys(starDirections).filter((k) => {
@@ -68,11 +68,11 @@ var startMoviment = (coords_planalto, sonda) => {
             sonda.x += parseInt(coordMoviment[0])
             sonda.y += parseInt(coordMoviment[1])
             
-            VALIDATE.coordInPlanalto(coords_planalto, sonda);
+            VALIDATE.coordInPlanalto(coords_planalto, sonda)
         }
     })
 
-    return sonda;
+    return sonda
 }
 
 /**
@@ -81,4 +81,4 @@ var startMoviment = (coords_planalto, sonda) => {
 module.exports = {
     loadMaps : loadMaps,
     startMoviment : startMoviment,
-};
+}
