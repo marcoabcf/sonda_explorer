@@ -10,6 +10,7 @@ const readlineInterface = READLINE.createInterface({
 });
 
 /**
+ * Show a question to enter data information.
  * 
  * @param {String} msg 
  * @param {Regex} format 
@@ -20,14 +21,14 @@ const question = (msg, format) => {
             if(VALIDATE.formatValue(answer, format)) {
                 resolve(answer)
             } else {
-                reject('Formato Inválido')
+                reject('Formato Inválido.')
             }
         })
     })
 }
 
 /**
- * 
+ * Main function of program execution.
  */
 const main = async () => {
     try {

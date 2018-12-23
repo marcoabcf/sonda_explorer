@@ -1,3 +1,6 @@
+/**
+ * Function exported to perform string breaking in array.
+ */
 module.exports.getSplitCoords = (coords) => {
     var input_coords_split = coords.split(' ')
     var split_coords = {

@@ -7,10 +7,22 @@ const FORMATS = {
     "MOVIMENTOS" : /[L|R|M]/i
 }
 
+/**
+ * Validates if the format of the given data is correct.
+ * 
+ * @param {String} str 
+ * @param {Regex} format 
+ */
 var formatValue = function(str, format) {
     return str.match(format)
 }
 
+/**
+ * Validates whether the given coordinates are within the bounds of the upland.
+ * 
+ * @param {object} coords_planalto 
+ * @param {object} coords_sonda 
+ */
 var coordInPlanalto = (coords_planalto, coords_sonda) => {
     coords_planalto = UTIL.getSplitCoords(coords_planalto);
 
@@ -19,6 +31,9 @@ var coordInPlanalto = (coords_planalto, coords_sonda) => {
     }
 }
 
+/**
+ * Functions exports.
+ */
 module.exports = {
     FORMATS : FORMATS,
     formatValue : formatValue,

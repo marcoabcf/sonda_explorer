@@ -1,6 +1,3 @@
-/**
- * 
- */
 const VALIDATE = require('./validations');
 
 var mapMoviments = []
@@ -8,7 +5,7 @@ var mapDirections = []
 var starDirections = []
 
 /**
- * 
+ * Loads the mappings of the directions and motions of the probe and wind rose axis.
  */
 var loadMaps = function() {
     mapDirections['R'] = 90;
@@ -26,6 +23,7 @@ var loadMaps = function() {
 }
 
 /**
+ * Returns the value of the probe direction.
  * 
  * @param {object} sonda 
  * @param {String} moviment 
@@ -49,6 +47,7 @@ var getValueDirection = function(sonda, moviment) {
 }
 
 /**
+ * Performs the movement of the probe in the mesh of the upland.
  * 
  * @param {object} coords_planalto 
  * @param {object} sonda 
@@ -77,7 +76,7 @@ var startMoviment = (coords_planalto, sonda) => {
 }
 
 /**
- * 
+ * Functions exports.
  */
 module.exports = {
     loadMaps : loadMaps,
