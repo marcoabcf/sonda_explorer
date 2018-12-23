@@ -4,12 +4,16 @@ const MESSAGES = require('./messages');
 const VALIDATE = require('./validations');
 const SONDA_MOVIMENTS = require('./sonda_moviments');
 
-var sondas = [];
 const readlineInterface = READLINE.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
 
+/**
+ * 
+ * @param {String} msg 
+ * @param {Regex} format 
+ */
 const question = (msg, format) => {
     return new Promise((resolve, reject) => {
         readlineInterface.question(MESSAGES.DEFAULT.replace('message', msg), (answer) => {
@@ -22,9 +26,14 @@ const question = (msg, format) => {
     })
 }
 
+/**
+ * 
+ */
 const main = async () => {
     try {
         SONDA_MOVIMENTS.loadMaps();
+        
+        var sondas = [];
         var number_sonda = await question(MESSAGES.MESSAGE_QUANTIDADE_SONDAS, VALIDATE.FORMATS.COUNT_SONDAS)
         var coords_planalto = await question(MESSAGES.MESSAGE_COORDENADA_SUPERIOR_DIREITA, VALIDATE.FORMATS.COORD_SUPERIOR_DIREITA)
 
@@ -36,11 +45,15 @@ const main = async () => {
             VALIDATE.coordInPlanalto(coords_planalto, sonda);
 
             sonda.moviments_sonda = await question(MESSAGES.MESSAGE_MOVIMENTOS_SONDA.replace('number_sonda', count_sonda+1), VALIDATE.FORMATS.MOVIMENTOS)
-            sondas[count_sonda] = SONDA_MOVIMENTS.startMoviment(sonda);
+            sondas[count_sonda] = SONDA_MOVIMENTS.startMoviment(coords_planalto, sonda);
 
             ++count_sonda
             --number_sonda
         }
+
+        sondas.forEach((sonda) => {
+            console.log(sonda.x, sonda.y, sonda.direction);
+        })
 
         readlineInterface.pause()
     } catch(error) {

@@ -1,7 +1,15 @@
+/**
+ * 
+ */
+const VALIDATE = require('./validations');
+
 var mapMoviments = []
 var mapDirections = []
 var starDirections = []
 
+/**
+ * 
+ */
 var loadMaps = function() {
     mapDirections['R'] = 90;
     mapDirections['L'] = -90;
@@ -17,6 +25,11 @@ var loadMaps = function() {
     starDirections['W'] = 270;
 }
 
+/**
+ * 
+ * @param {object} sonda 
+ * @param {String} moviment 
+ */
 var getValueDirection = function(sonda, moviment) {
     var starDirection = starDirections[sonda.direction] + mapDirections[moviment]
 
@@ -35,8 +48,14 @@ var getValueDirection = function(sonda, moviment) {
     return starDirection
 }
 
-var startMoviment = (sonda) => {
+/**
+ * 
+ * @param {object} coords_planalto 
+ * @param {object} sonda 
+ */
+var startMoviment = (coords_planalto, sonda) => {
     sonda.moviments_sonda.split('').map(function(moviment) {
+        moviment = moviment.toUpperCase();
         if((moviment == 'R' || moviment == 'L') && mapDirections[moviment]) {
             var starDirection = getValueDirection(sonda, moviment)
             sonda.direction = Object.keys(starDirections).filter((k) => {
@@ -49,11 +68,17 @@ var startMoviment = (sonda) => {
             coordMoviment = coordMoviment.split(',')
             sonda.x += parseInt(coordMoviment[0])
             sonda.y += parseInt(coordMoviment[1])
+            
+            VALIDATE.coordInPlanalto(coords_planalto, sonda);
         }
     })
-    console.log(sonda)
+
+    return sonda;
 }
 
+/**
+ * 
+ */
 module.exports = {
     loadMaps : loadMaps,
     startMoviment : startMoviment,

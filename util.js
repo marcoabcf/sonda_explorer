@@ -6,7 +6,7 @@ module.exports.getSplitCoords = (coords) => {
     }
 
     if(input_coords_split[2]) {
-        split_coords.direction = input_coords_split[2]
+        split_coords.direction = input_coords_split[2].toUpperCase()
     }
 
     return split_coords;
