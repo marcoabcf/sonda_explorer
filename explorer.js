@@ -1,27 +1,52 @@
+const UTIL = require('./util');
 const READLINE = require('readline');
 const MESSAGES = require('./messages');
+const VALIDATE = require('./validations');
 const SONDA_MOVIMENTS = require('./sonda_moviments');
 
-var number_line = 0;
-var count_sondas = 0;
-
-const rl = READLINE.createInterface({
+var sondas = [];
+const readlineInterface = READLINE.createInterface({
     input: process.stdin,
     output: process.stdout,
-    prompt: MESSAGES.DEFAULT.replace('message', MESSAGES.MESSAGE_QUANTIDADE_SONDAS)
 });
 
-rl.prompt();
-rl.on('line', (line) => {
-    ++number_line;
-    rl.setPrompt(MESSAGES.DEFAULT.replace('message', MESSAGES.MESSAGE_QUANTIDADE_SONDAS));
-    rl.prompt();
+const question = (msg, format) => {
+    return new Promise((resolve, reject) => {
+        readlineInterface.question(MESSAGES.DEFAULT.replace('message', msg), (answer) => {
+            if(VALIDATE.formatValue(answer, format)) {
+                resolve(answer)
+            } else {
+                reject('Formato Inválido')
+            }
+        })
+    })
+}
 
-    if(number_line === count_sondas) {
-        SONDA_MOVIMENTS.getMessageByLine(line.trim(), number_line);
-        process.exit(0);
+const main = async () => {
+    try {
+        SONDA_MOVIMENTS.loadMaps();
+        var number_sonda = await question(MESSAGES.MESSAGE_QUANTIDADE_SONDAS, VALIDATE.FORMATS.COUNT_SONDAS)
+        var coords_planalto = await question(MESSAGES.MESSAGE_COORDENADA_SUPERIOR_DIREITA, VALIDATE.FORMATS.COORD_SUPERIOR_DIREITA)
+
+        var count_sonda = 0;
+        while (number_sonda > 0) {
+            var coords_sonda = await question(MESSAGES.MESSAGE_COORDENADA_SONDA.replace('number_sonda', count_sonda+1), VALIDATE.FORMATS.COORD_SONDA)
+            var sonda = UTIL.getSplitCoords(coords_sonda);
+
+            VALIDATE.coordInPlanalto(coords_planalto, coords_sonda);
+
+            sonda.moviments_sonda = await question(MESSAGES.MESSAGE_MOVIMENTOS_SONDA.replace('number_sonda', count_sonda+1), VALIDATE.FORMATS.MOVIMENTOS)
+            sondas[count_sonda] = SONDA_MOVIMENTS.startMoviment(sonda);
+
+            ++count_sonda
+            --number_sonda
+        }
+
+        readlineInterface.pause()
+    } catch(error) {
+        console.log(error);
+        readlineInterface.close()
     }
-}).on('close', () => {
-    console.log('Até Logo!');
-    process.exit(0);
-});
+}
+
+main()
